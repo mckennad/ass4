@@ -1,0 +1,41 @@
+Devon McKenna
+#4330241
+CS3130
+Assignment 4 - Protocol
+______________________________________________________
+______________________________________________________|
+
+
+
+SERVER                                                          CLIENT
+_____________________________________________________________________________________________________
+*Setup                                                          *Setup
+                                                                *Connect Attempt
+BIG LOOP                                                                |
+*Listen     <-----------------------------------------------------------|
+*Accept connection
+
+LOOP                                                            LOOP
+*Recv and decode   <-----------------------|                    *Display Main Menu
+*Determine if input matches an option      |                    *Catch input
+    #addNewEmployee                        |--------------------*Encode and send
+    #searchForEmployee                                          *Listen
+    #removeEmployee                                    ||===>>  *Recv and decode
+    #displayDatabase                                   ||           #if ending with "#", will run a mini loop of recv/send
+    #quit                                              ||
+*If match, will call approp. method                    ||       *If last command was Quit, close socket (client ends)
+    #method may talk to client multiple times ---------||
+    #may result in method recalled                     ||
+*Encode and send --------------------------------------||
+*If last command was Quit, close socket
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    While in transit between client and server, messages are encoded in 'ascii' to byte literals.  They are decoded after reaching their destination.
+
+    recvall function used in brandon-rhodes example didn't allow for varying lengths of data, so I created my own (recvVar) with an end indicator (I used '^').  This let me control when to stop receiving data from the socket.
+
+    Checks using len(), isalpha, and general try:/except: code were used to determine if improper data was sent or if invalid text files were attempted to be opened.
